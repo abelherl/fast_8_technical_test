@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:payuung/constants/constants.dart';
+import 'package:payuung/controllers/profile_controller.dart';
 import 'package:payuung/entities/profile/profile_entity.dart';
 import 'package:payuung/failures/failure.dart';
 import 'package:payuung/helpers/global_helper.dart';
@@ -129,7 +130,7 @@ class EditProfileController extends GetxController {
     final ktpFile = this.ktpFile.value;
 
     if (ktpFile != null && uploaded.value) {
-      final prefs = Get.find<SharedPreferences>();
+      final prefs = await SharedPreferences.getInstance();
       final directory = await getApplicationDocumentsDirectory();
       final filePath = path.join(directory.path, path.basename('ktp'));
       await ktpFile.copy(filePath);
@@ -143,6 +144,9 @@ class EditProfileController extends GetxController {
     final usecase = Get.find<SaveProfileInfoUsecase>();
 
     final result = await usecase.call(profile.value!);
+
+    final controller = Get.find<ProfileController>();
+    await controller.getProfile();
 
     result.fold(
       (l) => _onError(l),

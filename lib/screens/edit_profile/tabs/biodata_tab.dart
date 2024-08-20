@@ -55,12 +55,6 @@ class _BiodataTabState extends State<BiodataTab> {
               _editProfile(c, biodata);
             },
           ),
-          CustomTextField(
-            title: 'Birth Date',
-            initialValue: biodata.birthDate.toString(),
-            required: true,
-            onChanged: (_) {},
-          ),
           CustomDropdown(
             title: 'Gender',
             items: const ['Male', 'Female'],

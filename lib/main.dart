@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:payuung/constants/constants.dart';
-import 'package:payuung/helpers/global_helper.dart';
 import 'package:payuung/screens/home/home_screen.dart';
 
+import 'injections.dart';
+
 void main() async {
-  await GlobalHelper.init();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AppInjections().dependencies();
+
   runApp(const MyApp());
 }
 

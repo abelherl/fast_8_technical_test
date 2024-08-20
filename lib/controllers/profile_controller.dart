@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:payuung/entities/profile/profile_entity.dart';
 import 'package:payuung/failures/failure.dart';
 import 'package:payuung/helpers/global_helper.dart';
 import 'package:payuung/usecases/profile/get_profile_info_usecase.dart';
-import 'package:payuung/usecases/profile/save_profile_info_usecase.dart';
 
 enum ProfileStatus { initial, loading, loaded, error }
 
@@ -16,7 +14,7 @@ class ProfileController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await _initDummyProfile();
+    await getProfile();
   }
 
   Future<void> getProfile() async {
@@ -30,24 +28,6 @@ class ProfileController extends GetxController {
           (l) => _onError(l),
           (r) {
         profile.value = r;
-        status.value = ProfileStatus.loaded;
-      },
-    );
-  }
-
-  Future<void> _initDummyProfile() async {
-    status.value = ProfileStatus.loading;
-
-    final profile = ProfileEntity.dummy();
-
-    final usecase = Get.find<SaveProfileInfoUsecase>();
-
-    final result = await usecase.call(profile);
-
-    result.fold(
-          (l) => _onError(l),
-          (r) {
-        this.profile.value = r;
         status.value = ProfileStatus.loaded;
       },
     );

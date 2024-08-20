@@ -21,9 +21,10 @@ class ProfileDatasourceImpl extends ProfileDatasource {
     final json = prefs.getString(Constants.prefsProfile);
 
     if (json == null) {
-      return Left(
-        DatabaseFailure(message: 'Profile data not found'),
-      );
+      final profile = ProfileEntity.dummy();
+      final data = jsonEncode(profile.toJson());
+      prefs.setString(Constants.prefsProfile, data);
+      return Right(profile);
     }
 
     try {

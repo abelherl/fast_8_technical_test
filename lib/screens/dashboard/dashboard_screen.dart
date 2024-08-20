@@ -53,80 +53,78 @@ class _AppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = Get.find<ProfileController>();
 
-    return Obx(
-      () {
-        final fullName = c.profile.value?.biodata.fullName;
-        final firstName = fullName?.split(' ')[0] ?? '-';
-        final initial = fullName?[0] ?? '-';
+    return Obx(() {
+      final fullName = c.profile.value?.biodata.fullName;
+      final firstName = fullName?.split(' ')[0] ?? '-';
+      final initial = fullName?[0] ?? '-';
 
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          color: Constants.primaryColor,
-          child: SafeArea(
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Selamat Datang',
-                      style: TextStyle(color: Colors.white),
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        color: Constants.primaryColor,
+        child: SafeArea(
+          child: Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Selamat Datang',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    firstName,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
-                    Text(
-                      firstName,
-                      style: const TextStyle(
+                  ),
+                ],
+              ),
+              const Spacer(),
+              const IconButton(
+                onPressed: null,
+                icon: Stack(
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.notifications_none_outlined,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.red,
+                        radius: 7,
+                        child: Text(
+                          '0',
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      ),
+                    )
                   ],
                 ),
-                const Spacer(),
-                const IconButton(
-                  onPressed: null,
-                  icon: Stack(
-                    children: [
-                      Center(
-                        child: Icon(
-                          Icons.notifications_none_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.red,
-                          radius: 7,
-                          child: Text(
-                            '0',
-                            style: TextStyle(fontSize: 10),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                InkWell(
-                  onTap: () => Get.to(() => EditProfileScreen()),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.blueGrey,
-                    child: Text(
-                      initial,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
+              ),
+              InkWell(
+                onTap: () => Get.to(() => const EditProfileScreen()),
+                child: CircleAvatar(
+                  backgroundColor: Colors.blueGrey,
+                  child: Text(
+                    initial,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      );
+    });
   }
 }
 
